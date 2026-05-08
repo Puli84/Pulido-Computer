@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Productos — Pulido Computer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --azul:        #1A5FA8;
+  --azul-dark:   #0f3f72;
+  --azul-mid:    #1e4f8a;
+  --azul-light:  #daeaf8;
+  --verde:       #25A870;
+  --verde-dark:  #1a7d52;
+  --verde-light: #d4f0e6;
+  --verde-wa:    #25D366;
+  --blanco:      #1a2a3a;
+  --blanco-suave:#4a6080;
+  --negro:       #ffffff;
+  --fondo:       #f4f7fc;
+  --fondo2:      #eaf0f8;
+  --borde:       #c8d8ea;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--fondo); color: var(--blanco); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%; height: 68px;
+  background: rgba(244,247,252,0.92); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--borde);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem;
+  color: var(--blanco); display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.logo-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--azul), var(--verde));
+  border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.nav-logo .verde { color: var(--verde); }
+.nav-links { display: flex; gap: 30px; list-style: none; }
+.nav-links a { color: var(--blanco-suave); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--verde); font-weight: 600; }
+.nav-cta {
+  background: var(--verde); color: #fff; border: none;
+  padding: 10px 22px; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+  text-decoration: none; display: flex; align-items: center; gap: 8px;
+}
+.nav-cta:hover { background: var(--verde-dark); transform: translateY(-1px); }
+
+/* HERO PEQUEÑO */
+.page-hero {
+  padding: 120px 5% 60px;
+  background: linear-gradient(135deg, #0f3f72 0%, #1A5FA8 50%, #1a8a6a 80%, #25A870 100%);
+  text-align: center; position: relative; overflow: hidden;
+}
+.page-hero-grid {
+  position: absolute; inset: 0;
+  opacity: 0.06;
+  background-image: linear-gradient(#c8d8ea 1px, transparent 1px), linear-gradient(90deg, #c8d8ea 1px, transparent 1px);
+  background-size: 55px 55px;
+}
+.page-hero-content { position: relative; z-index: 1; }
+.page-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  padding: 6px 16px; border-radius: 100px; font-size: 0.78rem;
+  color: #fff; font-weight: 500; margin-bottom: 20px; letter-spacing: 0.05em;
+}
+.page-hero h1 {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.8rem;
+  color: #fff; margin-bottom: 14px; line-height: 1.1;
+}
+.page-hero p { color: rgba(255,255,255,0.8); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+
+/* FILTROS */
+.filtros {
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  padding: 48px 5% 0;
+}
+.filtro-btn {
+  padding: 8px 22px; border-radius: 100px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+  border: 1.5px solid var(--borde); background: #fff; color: var(--blanco-suave);
+}
+.filtro-btn.active, .filtro-btn:hover {
+  background: var(--azul); color: #fff; border-color: var(--azul);
+}
+
+/* GRID PRODUCTOS */
+.productos-section { padding: 40px 5% 90px; }
+.productos-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px; max-width: 1200px; margin: 0 auto;
+}
+
+.prod-card {
+  background: #fff; border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--borde); transition: all 0.25s;
+  display: flex; flex-direction: column;
+}
+.prod-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,95,168,0.12); border-color: var(--azul-light); }
+
+.prod-img-wrap {
+  width: 100%; height: 200px; overflow: hidden; background: var(--fondo2);
+  display: flex; align-items: center; justify-content: center;
+}
+.prod-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;
+}
+.prod-card:hover .prod-img-wrap img { transform: scale(1.05); }
+
+.prod-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+.prod-badge {
+  display: inline-block; font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px; margin-bottom: 10px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.badge-periferico { background: rgba(37,168,112,0.1); color: var(--verde); }
+.badge-monitor    { background: rgba(26,95,168,0.1);  color: var(--azul); }
+.badge-componente { background: rgba(26,95,168,0.1);  color: var(--azul-mid); }
+
+.prod-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; color: var(--blanco); }
+.prod-desc { font-size: 0.88rem; color: var(--blanco-suave); line-height: 1.6; flex: 1; }
+.prod-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; }
+.prod-price { font-size: 1.1rem; color: var(--azul); font-weight: 700; }
+.prod-wa {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--verde); color: #fff; padding: 8px 16px; border-radius: 8px;
+  font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: background 0.2s;
+}
+.prod-wa:hover { background: var(--verde-dark); }
+
+/* FOOTER */
+footer {
+  background: var(--azul-dark); color: rgba(255,255,255,0.7);
+  padding: 48px 5% 28px;
+}
+.footer-top {
+  display: flex; gap: 40px; flex-wrap: wrap; justify-content: space-between;
+  padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 24px;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem;
+  color: #fff; display: flex; align-items: center; gap: 10px; text-decoration: none;
+  margin-bottom: 12px;
+}
+.footer-desc { font-size: 0.85rem; max-width: 240px; line-height: 1.7; }
+.footer-col h4 { color: #fff; font-weight: 700; font-size: 0.9rem; margin-bottom: 14px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-col ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-col ul li a:hover { color: var(--verde); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; flex-wrap: wrap; gap: 10px; }
+
+@media (max-width: 768px) {
+  .page-hero h1 { font-size: 2rem; }
+  .nav-links { display: none; }
+  .productos-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 500px) {
+  .productos-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="logo-icon">💻</div>
+    Pulido <span class="verde">Computer</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="productos.html" class="active">Productos</a></li>
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="index.html#precios">Tarifas</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/14155238886" target="_blank">💬 WhatsApp</a>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="page-badge">🛒 Catálogo completo</div>
+    <h1>Nuestros Productos</h1>
+    <p>Ratones, teclados, monitores y componentes disponibles en tienda. Consulta disponibilidad por WhatsApp.</p>
+  </div>
+</section>
+
+<!-- FILTROS -->
+<div class="filtros">
+  <button class="filtro-btn active" onclick="filtrar('todos', this)">Todos</button>
+  <button class="filtro-btn" onclick="filtrar('raton', this)">Ratones</button>
+  <button class="filtro-btn" onclick="filtrar('teclado', this)">Teclados</button>
+  <button class="filtro-btn" onclick="filtrar('monitor', this)">Monitores</button>
+  <button class="filtro-btn" onclick="filtrar('componente', this)">Componentes</button>
+</div>
+
+<!-- GRID -->
+<section class="productos-section">
+  <div class="productos-grid">
+
+    <!-- Ratón Gaming -->
+    <div class="prod-card" data-cat="raton">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=500&q=80" alt="Ratón Gaming" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-periferico">Ratón</span>
+        <h3 class="prod-name">Ratón Gaming</h3>
+        <p class="prod-desc">Sensor óptico de alta precisión hasta 16.000 DPI, diseño ergonómico y retroiluminación RGB personalizable. Ideal para gaming y trabajo.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>35€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20ratón%20gaming" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ratón Ergonómico -->
+    <div class="prod-card" data-cat="raton">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=500&q=80" alt="Ratón Ergonómico" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-periferico">Ratón</span>
+        <h3 class="prod-name">Ratón Ergonómico</h3>
+        <p class="prod-desc">Diseño vertical que reduce la tensión en muñeca y antebrazo. Inalámbrico, batería recargable y hasta 3 dispositivos conectados.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>59€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20ratón%20ergonómico" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teclado Mecánico -->
+    <div class="prod-card" data-cat="teclado">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1541140532154-b024d705b90a?auto=format&fit=crop&w=500&q=80" alt="Teclado Mecánico" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-periferico">Teclado</span>
+        <h3 class="prod-name">Teclado Mecánico</h3>
+        <p class="prod-desc">Switches mecánicos de precisión (Blue, Red o Brown), retroiluminación RGB por tecla y estructura de aluminio. Español e inglés disponibles.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>69€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20teclado%20mecánico" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teclado Inalámbrico -->
+    <div class="prod-card" data-cat="teclado">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1606574977917-ca7b0a84a7ce?auto=format&fit=crop&w=500&q=80" alt="Teclado Inalámbrico" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-periferico">Teclado</span>
+        <h3 class="prod-name">Teclado Inalámbrico</h3>
+        <p class="prod-desc">Compacto y silencioso, conectividad Bluetooth y USB. Batería de larga duración. Compatible con Windows, macOS y Android.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>39€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20teclado%20inalámbrico" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monitor Full HD -->
+    <div class="prod-card" data-cat="monitor">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1547119957-637f8679db1e?auto=format&fit=crop&w=500&q=80" alt="Monitor Full HD" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-monitor">Monitor</span>
+        <h3 class="prod-name">Monitor 24" Full HD</h3>
+        <p class="prod-desc">Panel IPS 1080p, 75Hz, tiempo de respuesta 5ms. Bordes ultrafinos, ajuste de altura y HDMI + VGA incluidos. Perfecto para oficina y estudio.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>149€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20monitor%2024%22" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monitor Gaming 27" -->
+    <div class="prod-card" data-cat="monitor">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=500&q=80" alt="Monitor Gaming 27" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-monitor">Monitor</span>
+        <h3 class="prod-name">Monitor Gaming 27" 144Hz</h3>
+        <p class="prod-desc">Panel IPS QHD 2K, 144Hz, 1ms GtG. Compatible con FreeSync y G-Sync. HDR400, colores vibrantes y soporte VESA 100x100.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>229€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20monitor%20gaming%2027%22" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monitor Curvo -->
+    <div class="prod-card" data-cat="monitor">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1616763355548-1b606f439f86?auto=format&fit=crop&w=500&q=80" alt="Monitor Curvo Ultrawide" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-monitor">Monitor</span>
+        <h3 class="prod-name">Monitor Curvo 34" Ultrawide</h3>
+        <p class="prod-desc">Panel VA 3440×1440, curvatura 1500R, 100Hz. Formato 21:9, perfecto para multitarea y edición. KVM integrado y hub USB-C.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>399€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20monitor%20curvo%2034%22" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Memoria RAM -->
+    <div class="prod-card" data-cat="componente">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=500&q=80" alt="Memoria RAM" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-componente">Componente</span>
+        <h3 class="prod-name">Memoria RAM DDR4/DDR5</h3>
+        <p class="prod-desc">Kits de 8GB, 16GB y 32GB para portátil y sobremesa. DDR4-3200 y DDR5-4800 disponibles. Instalación incluida en tienda.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>29€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20ampliar%20la%20RAM" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SSD -->
+    <div class="prod-card" data-cat="componente">
+      <div class="prod-img-wrap">
+        <img src="https://images.unsplash.com/photo-1568992688065-536aad8a12f6?auto=format&fit=crop&w=500&q=80" alt="Disco SSD" loading="lazy">
+      </div>
+      <div class="prod-body">
+        <span class="prod-badge badge-componente">Componente</span>
+        <h3 class="prod-name">Disco SSD NVMe</h3>
+        <p class="prod-desc">De 256GB a 2TB. Velocidades de hasta 7.000 MB/s en lectura (Gen 4). Instalación y migración de datos incluida sin coste adicional.</p>
+        <div class="prod-footer">
+          <span class="prod-price">Desde <strong>39€</strong></span>
+          <a class="prod-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20un%20disco%20SSD" target="_blank">💬 Info</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a class="footer-logo" href="index.html">
+        <div class="logo-icon">💻</div>
+        Pulido Computer
+      </a>
+      <p class="footer-desc">Venta y reparación de ordenadores en Las Palmas de Gran Canaria. Atención personalizada desde 2015.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Páginas</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="index.html#precios">Tarifas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="https://wa.me/14155238886">💬 WhatsApp</a></li>
+        <li><a href="#">info@pulidocomputer.com</a></li>
+        <li><a href="#">Bernardino Correa Viera, 5</a></li>
+        <li><a href="#">Las Palmas de Gran Canaria</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Pulido Computer — Todos los derechos reservados</span>
+    <span>Las Palmas de Gran Canaria</span>
+  </div>
+</footer>
+
+<script>
+function filtrar(cat, btn) {
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.prod-card').forEach(card => {
+    if (cat === 'todos' || card.dataset.cat === cat) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

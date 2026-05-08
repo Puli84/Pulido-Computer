@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servicios — Pulido Computer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --azul:        #1A5FA8;
+  --azul-dark:   #0f3f72;
+  --azul-mid:    #1e4f8a;
+  --azul-light:  #daeaf8;
+  --verde:       #25A870;
+  --verde-dark:  #1a7d52;
+  --verde-light: #d4f0e6;
+  --verde-wa:    #25D366;
+  --blanco:      #1a2a3a;
+  --blanco-suave:#4a6080;
+  --negro:       #ffffff;
+  --fondo:       #f4f7fc;
+  --fondo2:      #eaf0f8;
+  --borde:       #c8d8ea;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--fondo); color: var(--blanco); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%; height: 68px;
+  background: rgba(244,247,252,0.92); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--borde);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem;
+  color: var(--blanco); display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.logo-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--azul), var(--verde));
+  border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.nav-logo .verde { color: var(--verde); }
+.nav-links { display: flex; gap: 30px; list-style: none; }
+.nav-links a { color: var(--blanco-suave); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--verde); font-weight: 600; }
+.nav-cta {
+  background: var(--verde); color: #fff; border: none;
+  padding: 10px 22px; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+  text-decoration: none; display: flex; align-items: center; gap: 8px;
+}
+.nav-cta:hover { background: var(--verde-dark); transform: translateY(-1px); }
+
+/* HERO PEQUEÑO */
+.page-hero {
+  padding: 120px 5% 60px;
+  background: linear-gradient(135deg, #0f3f72 0%, #1A5FA8 50%, #1a8a6a 80%, #25A870 100%);
+  text-align: center; position: relative; overflow: hidden;
+}
+.page-hero-grid {
+  position: absolute; inset: 0; opacity: 0.06;
+  background-image: linear-gradient(#c8d8ea 1px, transparent 1px), linear-gradient(90deg, #c8d8ea 1px, transparent 1px);
+  background-size: 55px 55px;
+}
+.page-hero-content { position: relative; z-index: 1; }
+.page-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  padding: 6px 16px; border-radius: 100px; font-size: 0.78rem;
+  color: #fff; font-weight: 500; margin-bottom: 20px; letter-spacing: 0.05em;
+}
+.page-hero h1 {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.8rem;
+  color: #fff; margin-bottom: 14px; line-height: 1.1;
+}
+.page-hero p { color: rgba(255,255,255,0.8); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+
+/* GARANTÍA STRIP */
+.garantia-strip {
+  background: var(--azul-dark); color: rgba(255,255,255,0.85);
+  display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+  padding: 18px 5%; font-size: 0.85rem;
+}
+.garantia-item { display: flex; align-items: center; gap: 8px; }
+.garantia-item span:first-child { font-size: 1.1rem; }
+
+/* SERVICIOS GRID */
+.servicios-section { padding: 64px 5% 90px; max-width: 1200px; margin: 0 auto; }
+.servicios-section h2 {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem;
+  text-align: center; margin-bottom: 8px;
+}
+.servicios-sub { text-align: center; color: var(--blanco-suave); margin-bottom: 48px; font-size: 0.95rem; }
+
+.servicios-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.serv-card {
+  background: #fff; border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--borde); transition: all 0.25s;
+  display: flex; flex-direction: column;
+}
+.serv-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(26,95,168,0.12); border-color: var(--azul-light); }
+
+.serv-img-wrap {
+  width: 100%; height: 210px; overflow: hidden; background: var(--fondo2); position: relative;
+}
+.serv-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.serv-card:hover .serv-img-wrap img { transform: scale(1.05); }
+
+.serv-img-label {
+  position: absolute; bottom: 12px; left: 14px;
+  background: rgba(15,63,114,0.85); color: #fff;
+  font-size: 0.72rem; font-weight: 700; padding: 4px 12px;
+  border-radius: 100px; letter-spacing: 0.04em; text-transform: uppercase;
+  backdrop-filter: blur(6px);
+}
+
+.serv-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+.serv-icon { font-size: 2rem; margin-bottom: 10px; }
+.serv-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem; margin-bottom: 10px; }
+.serv-desc { font-size: 0.88rem; color: var(--blanco-suave); line-height: 1.7; flex: 1; }
+
+.serv-detalles {
+  margin-top: 16px; background: var(--fondo); border-radius: 10px;
+  padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+}
+.serv-detalle {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.82rem; color: var(--blanco-suave);
+}
+.serv-detalle::before { content: '✓'; color: var(--verde); font-weight: 700; flex-shrink: 0; }
+
+.serv-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+.serv-price { font-size: 1.05rem; color: var(--azul); font-weight: 700; }
+.serv-wa {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--verde); color: #fff; padding: 9px 18px; border-radius: 8px;
+  font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: background 0.2s;
+}
+.serv-wa:hover { background: var(--verde-dark); }
+
+/* DIAGNÓSTICO GRATIS BANNER */
+.diag-banner {
+  margin: 0 5% 90px; max-width: 1200px; margin-left: auto; margin-right: auto;
+  background: linear-gradient(135deg, var(--azul-dark), var(--azul));
+  border-radius: 20px; padding: 48px 48px; display: flex;
+  align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+.diag-banner h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; color: #fff; margin-bottom: 8px; }
+.diag-banner p { color: rgba(255,255,255,0.75); font-size: 0.9rem; max-width: 420px; }
+.diag-wa {
+  background: var(--verde-wa); color: #fff; padding: 14px 28px; border-radius: 10px;
+  font-weight: 700; font-size: 1rem; text-decoration: none; white-space: nowrap;
+  transition: opacity 0.2s; display: flex; align-items: center; gap: 10px;
+}
+.diag-wa:hover { opacity: 0.9; }
+
+/* FOOTER */
+footer {
+  background: var(--azul-dark); color: rgba(255,255,255,0.7);
+  padding: 48px 5% 28px;
+}
+.footer-top {
+  display: flex; gap: 40px; flex-wrap: wrap; justify-content: space-between;
+  padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 24px;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem;
+  color: #fff; display: flex; align-items: center; gap: 10px; text-decoration: none;
+  margin-bottom: 12px;
+}
+.footer-desc { font-size: 0.85rem; max-width: 240px; line-height: 1.7; }
+.footer-col h4 { color: #fff; font-weight: 700; font-size: 0.9rem; margin-bottom: 14px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-col ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-col ul li a:hover { color: var(--verde); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; flex-wrap: wrap; gap: 10px; }
+
+@media (max-width: 768px) {
+  .page-hero h1 { font-size: 2rem; }
+  .nav-links { display: none; }
+  .servicios-grid { grid-template-columns: 1fr; }
+  .garantia-strip { gap: 20px; }
+  .diag-banner { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="logo-icon">💻</div>
+    Pulido <span class="verde">Computer</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="productos.html">Productos</a></li>
+    <li><a href="servicios.html" class="active">Servicios</a></li>
+    <li><a href="index.html#precios">Tarifas</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/14155238886" target="_blank">💬 WhatsApp</a>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="page-badge">🔧 Servicio técnico profesional</div>
+    <h1>Nuestros Servicios</h1>
+    <p>Reparación, mantenimiento y optimización de ordenadores y portátiles en Las Palmas. Presupuesto sin compromiso.</p>
+  </div>
+</section>
+
+<!-- GARANTÍA STRIP -->
+<div class="garantia-strip">
+  <div class="garantia-item"><span>✅</span><span>Diagnóstico gratuito</span></div>
+  <div class="garantia-item"><span>🛡️</span><span>Garantía 3 meses</span></div>
+  <div class="garantia-item"><span>⚡</span><span>Reparación en 24-48h</span></div>
+  <div class="garantia-item"><span>📍</span><span>Servicio en tienda y a domicilio</span></div>
+</div>
+
+<!-- SERVICIOS -->
+<section class="servicios-section">
+  <h2>¿Qué podemos hacer por ti?</h2>
+  <p class="servicios-sub">Desde una limpieza rápida hasta reparaciones complejas. Llevamos tu equipo al taller y te damos presupuesto sin coste.</p>
+
+  <div class="servicios-grid">
+
+    <!-- Limpieza interna PC -->
+    <div class="serv-card">
+      <div class="serv-img-wrap">
+        <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=600&q=80" alt="Limpieza interna PC" loading="lazy">
+        <div class="serv-img-label">Mantenimiento</div>
+      </div>
+      <div class="serv-body">
+        <div class="serv-icon">🧹</div>
+        <h3 class="serv-name">Limpieza Interna de PC</h3>
+        <p class="serv-desc">Limpieza profunda con aire comprimido, aplicación de pasta térmica nueva y revisión del sistema de refrigeración. Tu equipo volverá a trabajar como el primer día.</p>
+        <div class="serv-detalles">
+          <div class="serv-detalle">Desmontaje y limpieza completa</div>
+          <div class="serv-detalle">Nueva pasta térmica en CPU y GPU</div>
+          <div class="serv-detalle">Comprobación de temperaturas</div>
+          <div class="serv-detalle">Informe de estado del equipo</div>
+        </div>
+        <div class="serv-footer">
+          <span class="serv-price">Desde <strong>25€</strong></span>
+          <a class="serv-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20servicio%20de%20limpieza%20de%20PC" target="_blank">💬 Pedir cita</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reparación pantalla portátil -->
+    <div class="serv-card">
+      <div class="serv-img-wrap">
+        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80" alt="Reparación pantalla portátil" loading="lazy">
+        <div class="serv-img-label">Reparación</div>
+      </div>
+      <div class="serv-body">
+        <div class="serv-icon">🖥️</div>
+        <h3 class="serv-name">Reparación de Pantalla Portátil</h3>
+        <p class="serv-desc">Sustitución de pantallas rotas, con píxeles muertos, rayaduras o retroiluminación defectuosa. Paneles originales y compatibles disponibles para la mayoría de marcas.</p>
+        <div class="serv-detalles">
+          <div class="serv-detalle">Diagnóstico previo sin coste</div>
+          <div class="serv-detalle">Paneles HD, Full HD y 4K</div>
+          <div class="serv-detalle">Compatible con HP, Lenovo, Acer, Asus, Dell</div>
+          <div class="serv-detalle">Garantía 3 meses en la pieza</div>
+        </div>
+        <div class="serv-footer">
+          <span class="serv-price">Desde <strong>59€</strong></span>
+          <a class="serv-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20la%20reparación%20de%20pantalla%20de%20portátil" target="_blank">💬 Pedir cita</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formateo e instalación Windows -->
+    <div class="serv-card">
+      <div class="serv-img-wrap">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Instalación Windows" loading="lazy">
+        <div class="serv-img-label">Software</div>
+      </div>
+      <div class="serv-body">
+        <div class="serv-icon">🪟</div>
+        <h3 class="serv-name">Formateo e Instalación de Windows</h3>
+        <p class="serv-desc">Instalación limpia de Windows 10 u 11, con todos los drivers actualizados, programas básicos y copia de seguridad previa de tus datos si es necesario.</p>
+        <div class="serv-detalles">
+          <div class="serv-detalle">Copia de seguridad previa</div>
+          <div class="serv-detalle">Windows 10 u 11 según tu equipo</div>
+          <div class="serv-detalle">Drivers y actualizaciones incluidos</div>
+          <div class="serv-detalle">Optimización de inicio y rendimiento</div>
+        </div>
+        <div class="serv-footer">
+          <span class="serv-price">Desde <strong>35€</strong></span>
+          <a class="serv-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20el%20formateo%20e%20instalación%20de%20Windows" target="_blank">💬 Pedir cita</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ampliación RAM/SSD -->
+    <div class="serv-card">
+      <div class="serv-img-wrap">
+        <img src="https://images.unsplash.com/photo-1562976540-1502c2145651?auto=format&fit=crop&w=600&q=80" alt="Ampliación RAM" loading="lazy">
+        <div class="serv-img-label">Mejora de rendimiento</div>
+      </div>
+      <div class="serv-body">
+        <div class="serv-icon">⚡</div>
+        <h3 class="serv-name">Ampliación de RAM y SSD</h3>
+        <p class="serv-desc">Dale una segunda vida a tu portátil o sobremesa. Instalamos módulos de RAM o discos SSD compatibles con tu equipo. Migración de datos incluida sin sobrecoste.</p>
+        <div class="serv-detalles">
+          <div class="serv-detalle">Análisis de compatibilidad previo</div>
+          <div class="serv-detalle">Instalación en el acto (aprox. 30 min)</div>
+          <div class="serv-detalle">Migración de datos al nuevo SSD</div>
+          <div class="serv-detalle">Verificación de estabilidad del sistema</div>
+        </div>
+        <div class="serv-footer">
+          <span class="serv-price">Desde <strong>15€</strong> (instalación)</span>
+          <a class="serv-wa" href="https://wa.me/14155238886?text=Hola!%20Me%20interesa%20ampliar%20la%20RAM%20o%20el%20SSD" target="_blank">💬 Pedir cita</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reparación de portátiles -->
+    <div class="serv-card">
+      <div class="serv-img-wrap">
+        <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=600&q=80" alt="Reparación portátiles" loading="lazy">
+        <div class="serv-img-label">Reparación</div>
+      </div>
+      <div class="serv-body">
+        <div class="serv-icon">🔩</div>
+        <h3 class="serv-name">Reparación General de Portátiles</h3>
+        <p class="serv-desc">Teclados rotos, bisagras partidas, conectores de carga dañados, batería agotada o placa base con fallos. Reparamos lo que otros no se atreven.</p>
+        <div class="serv-detalles">
+          <div class="serv-detalle">Diagnóstico gratuito en tienda</div>
+          <div class="serv-detalle">Presupuesto antes de comenzar</div>
+          <div class="serv-detalle">Piezas originales y de calidad</div>
+          <div class="serv-detalle">Garantía 3 meses en la reparación</div>
+        </div>
+        <div class="serv-footer">
+          <span class="serv-price">Presupuesto gratis</span>
+          <a class="serv-wa" href="https://wa.me/14155238886?text=Hola!%20Necesito%20reparar%20mi%20portátil" target="_blank">💬 Pedir cita</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eliminación de virus -->
+    <div class="serv-card">
+      <div class="serv-img-wrap">
+        <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=600&q=80" alt="Eliminación de virus" loading="lazy">
+        <div class="serv-img-label">Seguridad</div>
+      </div>
+      <div class="serv-body">
+        <div class="serv-icon">🛡️</div>
+        <h3 class="serv-name">Eliminación de Virus y Malware</h3>
+        <p class="serv-desc">¿Tu equipo va lento, muestra anuncios o se comporta de forma extraña? Limpiamos virus, ransomware, spyware y adware. Instalamos protección antivirus actualizada.</p>
+        <div class="serv-detalles">
+          <div class="serv-detalle">Análisis completo del sistema</div>
+          <div class="serv-detalle">Eliminación de amenazas detectadas</div>
+          <div class="serv-detalle">Instalación de antivirus de calidad</div>
+          <div class="serv-detalle">Consejos de seguridad personalizados</div>
+        </div>
+        <div class="serv-footer">
+          <span class="serv-price">Desde <strong>29€</strong></span>
+          <a class="serv-wa" href="https://wa.me/14155238886?text=Hola!%20Creo%20que%20mi%20PC%20tiene%20un%20virus" target="_blank">💬 Pedir cita</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BANNER DIAGNÓSTICO -->
+<div class="diag-banner" style="padding: 48px; margin: 0 5% 90px;">
+  <div>
+    <h3>🔍 Diagnóstico gratuito</h3>
+    <p>Trae tu equipo a nuestra tienda en Las Palmas y lo revisamos sin coste. Te damos un presupuesto claro antes de cualquier reparación.</p>
+  </div>
+  <a class="diag-wa" href="https://wa.me/14155238886?text=Hola!%20Quiero%20llevar%20mi%20equipo%20para%20diagnóstico%20gratuito" target="_blank">
+    💬 Reservar diagnóstico
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a class="footer-logo" href="index.html">
+        <div class="logo-icon">💻</div>
+        Pulido Computer
+      </a>
+      <p class="footer-desc">Venta y reparación de ordenadores en Las Palmas de Gran Canaria. Atención personalizada desde 2015.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Páginas</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="index.html#precios">Tarifas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="https://wa.me/14155238886">💬 WhatsApp</a></li>
+        <li><a href="#">info@pulidocomputer.com</a></li>
+        <li><a href="#">Bernardino Correa Viera, 5</a></li>
+        <li><a href="#">Las Palmas de Gran Canaria</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Pulido Computer — Todos los derechos reservados</span>
+    <span>Las Palmas de Gran Canaria</span>
+  </div>
+</footer>
+
+</body>
+</html>
